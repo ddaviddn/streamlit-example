@@ -1,4 +1,5 @@
 from collections import namedtuple
+from components.interest import *
 import altair as alt
 import math
 import pandas as pd
@@ -17,8 +18,11 @@ In the meantime, below is an example of what you can do with just a few lines of
 
 
 with st.echo(code_location='below'):
-    total_points = st.slider("Number of points in spiral", 1, 5000, 2000)
-    num_turns = st.slider("Number of turns in spiral", 1, 100, 9)
+    start_investment = st.slider("Starting Investment:", 0, 1000000, 5000, step=100)
+    rate_of_return = st.slider("Interest Rate:", 0, 100.0, 5.0, step=0.01)
+    rate_of_inflation = st.slider("Current Inflation Rate:", 0, 100.0, 4.7, step=0.01)
+    years_invested = st.slider("Years Invested:", 0, 80, 4)
+    num_withdrawals = st.slider("Withdrawal Amount per Year:", 0, 1000000, 1000, step=100)
 
     Point = namedtuple('Point', 'x y')
     data = []
