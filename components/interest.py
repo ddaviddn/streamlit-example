@@ -1,11 +1,17 @@
-from typing import Any
+# from typing import Any
 
 
-def investment_calc(start_investment: int,
-                    rate_of_return: float,
-                    rate_of_inflation: float,
-                    years_invested: int,
-                    withdrawals: int) -> list[int | Any]:
+# def investment_calc(start_investment: int,
+#                     rate_of_return: float,
+#                     rate_of_inflation: float,
+#                     years_invested: int,
+#                     withdrawals: int) -> list[int | Any]:
+  
+def investment_calc(start_investment,
+                    rate_of_return,
+                    rate_of_inflation,
+                    years_invested,
+                    withdrawals):
     """
     This function will return the investment after the inputted
     number of years invested. This is useful for financial managers
