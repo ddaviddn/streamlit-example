@@ -1,7 +1,5 @@
 altair
 pandas
 streamlit
-typing
 matplotlib
-collections
 numpy
