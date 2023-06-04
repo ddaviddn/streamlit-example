@@ -120,19 +120,19 @@ st.data_editor(
     column_config={
         "Current Balance": st.column_config.NumberColumn(
             "Current Balance",
-            format="$%.2f:,",
+            format="$%.2f",
         ),
         "Net Difference": st.column_config.NumberColumn(
             "Net Difference",
-            format="$%.2f:,",
+            format="$%.2f",
         ),
         "Interest Earned": st.column_config.NumberColumn(
             "Interest Earned",
-            format="$%.2f:,",
+            format="$%.2f",
         ),
         "Inflation Loss": st.column_config.NumberColumn(
             "Inflation Loss",
-            format="$%.2f:,",
+            format="$%.2f",
         ),
     },
     hide_index=True,
