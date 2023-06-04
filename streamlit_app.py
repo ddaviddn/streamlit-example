@@ -104,13 +104,13 @@ df = pd.DataFrame(
 col1, col2 = st.columns(2)
 col3, col4 = st.columns(2)
 col1.metric("Lifetime Interest Earned",
-            value=f'${np.round(sum(df["Interest Earned"]), 2)}')
+            value=f'${np.round(sum(df["Interest Earned"]), 2):,}')
 col2.metric("Lifetime Inflation Loss",
-            value=f'${np.round(sum(df["Inflation Loss"]), 2)}')
+            value=f'${np.round(sum(df["Inflation Loss"]), 2):,}')
 col3.metric("Ending Balance",
-            value=f'${np.round(df["Current Balance"][years_invested], 2)}')
+            value=f'${np.round(df["Current Balance"][years_invested], 2):,}')
 col4.metric("Avg Bal Change / Year",
-            value=f'${np.round(np.mean(df["Net Difference"]), 2)}')
+            value=f'${np.round(np.mean(df["Net Difference"]), 2):,}')
 
 """
 # Data Table Visualization.
