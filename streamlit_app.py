@@ -101,7 +101,8 @@ df = pd.DataFrame(
     }
 )
 
-col1, col2, col3, col4 = st.columns(4)
+col1, col2 = st.columns(2)
+col3, col4 = st.columns(2)
 col1.metric("Lifetime Interest Earned",
             value=f'${np.round(sum(df["Interest Earned"]), 2)}')
 col2.metric("Lifetime Inflation Loss",
