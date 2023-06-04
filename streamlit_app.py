@@ -1,42 +1,55 @@
 from collections import namedtuple
-from components.interest import *
+from components.interest import investment_calc
 import altair as alt
 import math
 import pandas as pd
+import numpy as np
 import streamlit as st
 
 """
-# Welcome to Streamlit!
+# Investment Calculator.
 
-Edit `/streamlit_app.py` to customize this app to your heart's desire :heart:
+Play around with the investment parameters and run a break-even analysis. Given an interest rate offered by your financial institution, this calculator is able to answer a few questions, including, but not limited to: 
 
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
+- How much are you able to withdraw each year based on a starting investment?
+- What interest rate should you strive to aim for in a financial institution to keep up with the pace of inflation.
+- How long until you're able to reach your investment goals?
 
-In the meantime, below is an example of what you can do with just a few lines of code:
+
 """
 
-
 with st.echo(code_location='below'):
-    start_investment = st.slider("Starting Investment:", 0, 1000000, 5000, step=100)
-    rate_of_return = st.slider("Interest Rate:", 0, 100.0, 5.0, step=0.01)
-    rate_of_inflation = st.slider("Current Inflation Rate:", 0, 100.0, 4.7, step=0.01)
+    start_investment = st.slider("Starting Investment:", 0, 500000, 5000, step=500)
+    rate_of_return = st.slider("Interest Rate:", 0.0, 100.0, 5.0, step=0.01)
+    rate_of_inflation = st.slider("Current Inflation Rate:", 0.0, 100.0, 4.7, step=0.01)
     years_invested = st.slider("Years Invested:", 0, 80, 4)
-    num_withdrawals = st.slider("Withdrawal Amount per Year:", 0, 1000000, 1000, step=100)
+    amt_withdrawals = st.slider("Withdrawal Amount per Year:", 0, 10000, 1000, step=250)
 
-    Point = namedtuple('Point', 'x y')
-    data = []
+    Investment = namedtuple('InvestmentOvertime', 'time, amount')
+    time = [i for i in range(years_invested + 1)]
+    balance = investment_calc(start_investment,
+                              1 + (rate_of_return / 100),
+                              1 + (rate_of_inflation / 100),
+                              years_invested,
+                              amt_withdrawals)
+    interest_earned = [0]
+    inflation_hit = [0]
 
-    points_per_turn = total_points / num_turns
+    for i in range(len(balance) - 1):
+        interest_earned.append(np.round(balance[i+1] * (rate_of_return / 100), 2))
+        inflation_hit.append(np.round(balance[i+1] * (rate_of_inflation / 100), 2))
 
-    for curr_point_num in range(total_points):
-        curr_turn, i = divmod(curr_point_num, points_per_turn)
-        angle = (curr_turn + 1) * 2 * math.pi * i / points_per_turn
-        radius = curr_point_num / total_points
-        x = radius * math.cos(angle)
-        y = radius * math.sin(angle)
-        data.append(Point(x, y))
+    df = pd.DataFrame(
+        {
+            'Years': time,
+            'Current Balance': [np.round(bal, 2) for bal in balance],
+            'Interest Earned': interest_earned,
+            'Inflation Loss': inflation_hit
+        }
+    )
 
-    st.altair_chart(alt.Chart(pd.DataFrame(data), height=500, width=500)
-        .mark_circle(color='#0068c9', opacity=0.5)
-        .encode(x='x:Q', y='y:Q'))
+    st.dataframe(df, use_container_width=True)
+
+    # st.altair_chart(alt.Chart(pd.DataFrame([time, data]), height=500, width=500)
+    #     .mark_circle(color='#0068c9', opacity=0.5)
+    #     .encode(x='x:Q', y='y:Q'))

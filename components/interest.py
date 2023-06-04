@@ -25,4 +25,4 @@ def investment_calc(start_investment: int,
                     (investment_history[years] * rate_of_inflation) - withdrawals
         investment_history.append(round(next_year, 3))
 
-    return investment_history[-1]
+    return investment_history
