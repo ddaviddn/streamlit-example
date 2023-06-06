@@ -63,6 +63,8 @@ i_f = \text{Market Rate of Inflation}
 W_i = \text{Withdrawal Amount at Year }i
 ''')
 
+st.divider()
+
 start_investment = st.slider("Starting Investment:", 0, 500000, 5000, step=500)
 rate_of_return = st.slider("Interest Rate:", 0.0, 100.0, 5.0, step=0.01)
 rate_of_inflation = st.slider("Current Inflation Rate:", 0.0, 100.0, 4.7, step=0.01)
@@ -101,6 +103,8 @@ df = pd.DataFrame(
     }
 )
 
+st.divider()
+
 col1, col2 = st.columns(2)
 col3, col4 = st.columns(2)
 col1.metric("Lifetime Interest Earned",
@@ -111,6 +115,8 @@ col3.metric("Ending Balance",
             value=f'${np.round(df["Current Balance"][years_invested], 2):,}')
 col4.metric("Avg Bal Change / Year",
             value=f'${np.round(np.mean(df["Net Difference"]), 2):,}')
+
+st.divider()
 
 """
 # Data Table Visualization.
