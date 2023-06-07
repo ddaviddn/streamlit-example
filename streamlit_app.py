@@ -114,7 +114,7 @@ col2.metric("Lifetime Inflation Loss",
 col3.metric("Ending Balance",
             value=f'${np.round(df["Current Balance"][years_invested], 2):,}')
 col4.metric("Avg Bal Change / Year",
-            value=f'${np.round(np.mean(df["Net Difference"]), 2):,}')
+            value=f'${np.round(np.mean(df["Net Difference"][1:]), 2):,}')
 
 st.divider()
 
